@@ -4,7 +4,8 @@ import {StyleSheet,
     Text,
     TouchableOpacity,
     TextInput,
-    Button} from 'react-native';
+    Button,
+    StatusBar} from 'react-native';
 
 const styles = StyleSheet.create({
     numericButton: {
@@ -45,7 +46,7 @@ export default class Calculator extends Component {
     }
 
     render() {
-        const {  operation, firstNumber, secondNumber, setFirstNumber, setSecondNumber, resetNumbers, operant, submit } = this.props;
+        const {  operation, firstNumber, secondNumber, setFirstNumber, setSecondNumber, resetNumbers, operant, submit, back } = this.props;
 
         const setNumber = (number) => {
                 operant ? setSecondNumber({number: number}) : setFirstNumber({number: number})
@@ -64,7 +65,7 @@ export default class Calculator extends Component {
 
         const displayNumbers = (number) => {
             let numbersView = [];
-            let operationList = ['+','-','/','*'];
+            let operationList = ['+','-','/','x'];
 
             for (let i = 1; i <= 9; i+=3) {
                 let view = (<View key={i} style={styles.numberButtonContainer}>
@@ -120,6 +121,9 @@ export default class Calculator extends Component {
 
         return (
             <View style={styles.container}>
+                <StatusBar
+                    backgroundColor="#546e7a"
+                />
                 <View style={{flex:1, justifyContent: 'space-around'}}>
                     <Text style={styles.displayText}>{displayText()}</Text>
                 </View>
@@ -127,11 +131,14 @@ export default class Calculator extends Component {
                     {displayNumbers()}
 
                     <View style={styles.numberButtonContainer}>
-                        <TouchableOpacity style={[styles.numericButton,{backgroundColor: '#546e7a'}]} onPress={submit}>
-                            <Text style={styles.numericButtonText}>=</Text>
-                        </TouchableOpacity>
                         <TouchableOpacity style={[styles.numericButton,{backgroundColor: '#546e7a'}]} onPress={resetNumbers}>
                             <Text style={styles.numericButtonText}>C</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={[styles.numericButton,{backgroundColor: '#546e7a'}]} onPress={back}>
+                            <Text style={styles.numericButtonText}>{'<'}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={[styles.numericButton,{backgroundColor: '#546e7a'}]} onPress={submit}>
+                            <Text style={styles.numericButtonText}>=</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

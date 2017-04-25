@@ -41,3 +41,8 @@ export function submit() {
         type: types.SUBMIT
     };
 }
+export function back() {
+    return {
+        type: types.BACK
+    };
+}

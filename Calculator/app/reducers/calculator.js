@@ -13,7 +13,7 @@ const calculate = (a,b,operation) => {
             return a - b;
         case '/':
             return a / b;
-        case '*':
+        case 'x':
             return a * b;
         
     }
@@ -28,7 +28,7 @@ export default function calculator(state = initialState, action = {}) {
                 operant: action.operant
             };
         case types.FIRSTNUMBER:
-            if (action.number === '.') {
+            if (action.number === '.' && !state.firstNumber.toString().includes('.')) {
                 number = `${state.firstNumber}${action.number}`
             } else {
                 number = parseFloat(`${state.firstNumber}${action.number}`);
@@ -38,7 +38,7 @@ export default function calculator(state = initialState, action = {}) {
                 firstNumber : number
             };
         case types.SECONDNUMBER:
-            if (action.number === '.') {
+            if (action.number === '.' && !state.secondNumber.toString().includes('.')) {
                 number = `${state.secondNumber}${action.number}`
             } else {
                 number = parseFloat(`${state.secondNumber}${action.number}`);
@@ -47,6 +47,29 @@ export default function calculator(state = initialState, action = {}) {
                 ...state,
                 secondNumber : number
             };
+        case types.BACK:
+            let a = state.firstNumber.toString(),b = state.secondNumber.toString() ,c = state.operant.toString();
+            if (b !== '0') {
+                b = b.slice(0, -1);
+                return {
+                    ...state,
+                    secondNumber: b.length === 0 ? 0 : parseFloat(b)
+                };
+            } else if (c !== '') {
+                return {
+                    ...state,
+                    operant: ''
+                };
+            } else {
+                a = a.slice(0, -1);
+                if (a.length === 0) {
+                    a = 0
+                }
+                return {
+                    ...state,
+                    firstNumber : parseFloat(a)
+                }
+            }
         case types.RESET:
             return {
                 ...state,
@@ -55,6 +78,11 @@ export default function calculator(state = initialState, action = {}) {
                 secondNumber: 0,
             };
         case types.SUBMIT:
+            if (state.secondNumber === 0) {
+                return {
+                    ...state
+                }
+            }
             let result = state.operant !== '' ? calculate(state.firstNumber,state.secondNumber,state.operant) : state.firstNumber;
             return {
                 ...state,
