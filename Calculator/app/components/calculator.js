@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     numericButtonText: {
         color: '#fff',
         alignSelf: 'center',
-        fontSize: 32
+        fontSize: 32,
     },
     numberButtonContainer: {
         flex:1,
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignSelf: 'flex-end',
         fontSize: 42,
-        padding: 20
+        padding: 20,
     },
     blueGrayColor: {
         backgroundColor: '#607d8b',
@@ -54,7 +54,7 @@ export default class Calculator extends Component {
         const setOperant = (operand) => {
             if (firstNumber !== 0) {
                 if (operant === '') {
-                    operation({operant: operand})
+                    operation({operant: operand});
                 } else {
                     submit();
                     operation({operant: operand});
@@ -69,13 +69,13 @@ export default class Calculator extends Component {
             for (let i = 1; i <= 9; i+=3) {
                 let view = (<View key={i} style={styles.numberButtonContainer}>
                     <TouchableOpacity key={i} style={styles.numericButton} onPress={() => setNumber(i)}>
-                        <Text style={styles.numericButtonText}>{i}</Text>
+                        <Text style={styles.numericButtonText}>{(i).toString()}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity key={i+1} style={styles.numericButton} onPress={() => setNumber(i+1)}>
-                        <Text style={styles.numericButtonText}>{i+1}</Text>
+                        <Text style={styles.numericButtonText}>{(i+1).toString()}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity key={i+2} style={styles.numericButton} onPress={() => setNumber(i+2)}>
-                        <Text style={styles.numericButtonText}>{i+2}</Text>
+                        <Text style={styles.numericButtonText}>{(i+2).toString()}</Text>
                     </TouchableOpacity>
                     {displayOperations(operationList.pop())}
                 </View>);
@@ -90,8 +90,8 @@ export default class Calculator extends Component {
                 <TouchableOpacity  style={styles.numericButton} onPress={() => setNumber('00')}>
                     <Text style={styles.numericButtonText}>00</Text>
                 </TouchableOpacity>
-                <TouchableOpacity  style={styles.numericButton} onPress={() => setNumber('000')}>
-                    <Text style={styles.numericButtonText}>000</Text>
+                <TouchableOpacity  style={styles.numericButton} onPress={() => setNumber('.')}>
+                    <Text style={styles.numericButtonText}>.</Text>
                 </TouchableOpacity>
                 {displayOperations(operationList.pop())}
             </View>);
@@ -107,7 +107,6 @@ export default class Calculator extends Component {
         };
 
         const displayText = () => {
-
             let text = firstNumber;
 
             if (operant) {
@@ -116,9 +115,8 @@ export default class Calculator extends Component {
             if (secondNumber != 0) {
                 text += " " + secondNumber
             }
-            return text
+            return text.toString()
         };
-
 
         return (
             <View style={styles.container}>

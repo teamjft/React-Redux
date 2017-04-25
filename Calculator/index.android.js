@@ -5,14 +5,7 @@
  */
 
 import React, { Component } from 'react';
-import {
-    AppRegistry,
-    StyleSheet,
-    Text,
-    View,
-    TextInput,
-    Button
-} from 'react-native';
+import { AppRegistry } from 'react-native';
 import App from './app/containers/app';
 
 AppRegistry.registerComponent('Calculator', () => App);

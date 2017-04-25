@@ -20,6 +20,7 @@ const calculate = (a,b,operation) => {
 };
 
 export default function calculator(state = initialState, action = {}) {
+    let number = 0;
     switch (action.type) {
         case types.OPERANT:
             return {
@@ -27,14 +28,24 @@ export default function calculator(state = initialState, action = {}) {
                 operant: action.operant
             };
         case types.FIRSTNUMBER:
+            if (action.number === '.') {
+                number = `${state.firstNumber}${action.number}`
+            } else {
+                number = parseFloat(`${state.firstNumber}${action.number}`);
+            }
             return {
                 ...state,
-                firstNumber : parseInt(`${state.firstNumber}${action.number}`)
+                firstNumber : number
             };
         case types.SECONDNUMBER:
+            if (action.number === '.') {
+                number = `${state.secondNumber}${action.number}`
+            } else {
+                number = parseFloat(`${state.secondNumber}${action.number}`);
+            }
             return {
                 ...state,
-                secondNumber : parseInt(`${state.secondNumber}${action.number}`)
+                secondNumber : number
             };
         case types.RESET:
             return {
